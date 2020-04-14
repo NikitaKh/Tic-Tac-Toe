@@ -1,5 +1,6 @@
 package tictactoe;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Field {
@@ -43,17 +44,25 @@ class Moves {
     private int x;
     private int y;
 
-    Moves{
-    }
-
     public void movesScanner(){
-
+        System.out.print("Enter the coordinates: ");
         try{
             Scanner sc = new Scanner(System.in);
             x = sc.nextInt();
             y = sc.nextInt();
-        } catch (IllegalMonitorStateException e){
-            System.out.print("You should enter numbers!");
+        } catch (InputMismatchException e){
+            System.out.println("You should enter numbers!");
+            movesScanner();
+        }
+        if ((x > 0 && x < 4) && (y > 0 && y < 4)){
+            x += x;
+            if (y == 1){
+                y += 2;
+            } else if (y == 3){
+                y -= 2;
+            }
+        } else {
+            System.out.println("Coordinates should be from 1 to 3!");
             movesScanner();
         }
     }
@@ -61,6 +70,7 @@ class Moves {
 
 class Game {
     private Field field;
+    Moves scanning = new Moves();
 
     public Game(int size){
         field = new Field(size);
@@ -68,7 +78,7 @@ class Game {
 
     public void play(){
         field.print(field.getField());
-
+        scanning.movesScanner();
         //result(input);
     }
 
