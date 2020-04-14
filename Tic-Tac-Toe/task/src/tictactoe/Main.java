@@ -7,7 +7,6 @@ class Field {
 
     private char[][] field;
 
-
     public Field(int fieldSize) {
         field = new char[fieldSize + 2][fieldSize + 6];
         for (int row = 0; row < field.length; row++) {
@@ -37,7 +36,6 @@ class Field {
             System.out.print("\n");
         }
     }
-
 }
 
 class Moves {
@@ -74,8 +72,6 @@ class Moves {
         }
         placeMove();
         lineChecker(field);
-        printWithMove();
-        movesScanner();
     }
 
     private void placeMove(){
