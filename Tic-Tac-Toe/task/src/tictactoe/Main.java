@@ -7,6 +7,7 @@ class Field {
 
     private char[][] field;
 
+
     public Field(int fieldSize) {
         field = new char[fieldSize + 2][fieldSize + 6];
         for (int row = 0; row < field.length; row++) {
@@ -43,6 +44,12 @@ class Moves {
 
     private int x;
     private int y;
+    private int movesCounter = 1;
+    private char[][] field;
+
+    public Moves(char[][] field){
+        this.field = field;
+    }
 
     public void movesScanner(){
         System.out.print("Enter the coordinates: ");
@@ -64,48 +71,28 @@ class Moves {
         } else {
             System.out.println("Coordinates should be from 1 to 3!");
             movesScanner();
+        }
+        placeMove();
+        lineChecker(field);
+        printWithMove();
+    }
 
+    private void placeMove(){
+        if (movesCounter % 2 == 1) {
+            field[y][x] = 'X';
+            movesCounter++;
+        } else if (movesCounter % 2 == 0) {
+            field[y][x] = 'O';
+            movesCounter++;
         }
     }
-}
-
-class Game {
-    private Field field;
-    Moves scanning = new Moves();
-
-    public Game(int size){
-        field = new Field(size);
-    }
-
-    public void play(){
-        field.print(field.getField());
-        scanning.movesScanner();
-        //result(input);
-    }
-
-
-    /*
-    public void result (String input){
-        char[][] fileld2 = new char[3][3];
-        int counter = 0;
-        int x = 0;
-        int o = 0;
-
-        for(int i = 0; i < fileld2.length; i++){
-            for (int j = 0; j < fileld2[i].length; j++){
-                fileld2[i][j] = input.charAt(counter);
-                if (fileld2[i][j] == 'X'){
-                    x++;
-                } else if (fileld2[i][j] == 'O'){
-                    o++;
-                }
-                counter++;
+    private void printWithMove(){
+        for(int i = 0; i < field.length; i++){
+            for (int j = 0; j < field[i].length; j++){
+                System.out.print(field[i][j]);
             }
+            System.out.println();
         }
-        if (x - o > 1 || o - x > 1)
-            System.out.println("Impossible");
-        else
-            lineChecker(fileld2);
     }
 
     public void lineChecker(char[][] field){
@@ -200,7 +187,33 @@ class Game {
             System.exit(0);
         }
     }
+
+    /*
+    private void emountCheck(char[][] field){
+        int xCount = 0;
+        int oCount = 0;
+        for(int i = 1; i < field.length - 1; i++){
+            for (int j = 2; j < field[i].length - 2; j += 2){
+                if (field[i][j] == '')
+            }
+        }
+    }
+
      */
+}
+
+class Game {
+    private Field field;
+
+    public Game(int size){
+        field = new Field(size);
+    }
+
+    public void play(){
+        field.print(field.getField());
+        Moves scanning = new Moves(field.getField());
+        scanning.movesScanner();
+    }
 }
 
 public class Main {
