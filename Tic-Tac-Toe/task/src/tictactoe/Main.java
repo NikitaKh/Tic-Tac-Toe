@@ -162,14 +162,7 @@ class Moves {
             rowO = 0;
             rowX = 0;
         }
-        if (lineCounterO > 1 || lineCounterX > 1 || rowCounterO > 1 || rowCounterX > 1){
-            System.out.println("Impossible");
-            System.exit(0);
-        } else if ((lineCounterO == 1 && lineCounterX == 1) || (lineCounterO == 1 && rowCounterO == 1) ||
-                (lineCounterX == 1 && rowCounterX == 1) || (rowCounterO == 1 && rowCounterX == 1)) {
-            System.out.println("Impossible");
-            System.exit(0);
-        } else if (lineCounterO == 1 || rowCounterO == 1 || diogonalO == 1){
+        if (lineCounterO == 1 || rowCounterO == 1 || diogonalO == 1){
             printWithMove();
             System.out.println("O wins");
             System.exit(0);
