@@ -64,6 +64,7 @@ class Moves {
         } else {
             System.out.println("Coordinates should be from 1 to 3!");
             movesScanner();
+
         }
     }
 }
