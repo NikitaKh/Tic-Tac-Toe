@@ -75,15 +75,21 @@ class Moves {
         placeMove();
         lineChecker(field);
         printWithMove();
+        movesScanner();
     }
 
     private void placeMove(){
-        if (movesCounter % 2 == 1) {
-            field[y][x] = 'X';
-            movesCounter++;
-        } else if (movesCounter % 2 == 0) {
-            field[y][x] = 'O';
-            movesCounter++;
+        if (field[y][x] == 'X' || field[y][x] == 'O'){
+            System.out.println("This cell is occupied! Choose another one!");
+            movesScanner();
+        } else {
+            if (movesCounter % 2 == 1) {
+                field[y][x] = 'X';
+                movesCounter++;
+            } else if (movesCounter % 2 == 0) {
+                field[y][x] = 'O';
+                movesCounter++;
+            }
         }
     }
     private void printWithMove(){
@@ -113,19 +119,17 @@ class Moves {
         int rowCounterX = 0;
         int rowCounterO = 0;
 
-        int index = field.length;
-
-        if ((field[1][1] == field[index - 1][index - 1] && field[1][1] == field[0][0]) ||
-                (field[1][1] == field[0][index - 1] && field[1][1] == field[index - 1][0])){
-            if (field[1][1] == 'X'){
+        if ((field[2][4] == field[1][2] && field[2][4] == field[3][6]) ||
+                (field[2][4] == field[3][2] && field[2][4] == field[1][6])){
+            if (field[2][4] == 'X'){
                 diogonalX++;
-            }else if (field[1][1] == 'O'){
+            }else if (field[2][4] == 'O'){
                 diogonalO++;
             }
         }
 
-        for(int i = 0; i < field.length; i++){
-            for(int j = 0; j < field[i].length; j++){
+        for(int i = 1; i < field.length - 1; i++){
+            for(int j = 2; j < field[i].length - 2; j += 2){
                 if (field[i][j] == 'O'){
                     lineO++;
                 } else if (field[i][j] == 'X'){
@@ -142,15 +146,8 @@ class Moves {
             lineX = 0;
         }
 
-        for(int i = 0; i < field.length; i++) {
-            if (rowO == 3) {
-                rowCounterO++;
-            } else if (rowX == 3) {
-                rowCounterX++;
-            }
-            rowO = 0;
-            rowX = 0;
-            for (int j = 0; j < field[i].length; j++) {
+        for(int i = 2; i < field.length + 2; i +=2) {
+            for (int j = 1; j < field.length - 1; j++) {
                 if (field[j][i] == 'O') {
                     rowO++;
                 } else if (field[j][i] == 'X') {
@@ -165,7 +162,6 @@ class Moves {
             rowO = 0;
             rowX = 0;
         }
-
         if (lineCounterO > 1 || lineCounterX > 1 || rowCounterO > 1 || rowCounterX > 1){
             System.out.println("Impossible");
             System.exit(0);
@@ -174,32 +170,21 @@ class Moves {
             System.out.println("Impossible");
             System.exit(0);
         } else if (lineCounterO == 1 || rowCounterO == 1 || diogonalO == 1){
+            printWithMove();
             System.out.println("O wins");
             System.exit(0);
         } else if (lineCounterX == 1 || rowCounterX == 1 || diogonalX == 1){
+            printWithMove();
             System.out.println("X wins");
             System.exit(0);
         } else if (space > 0){
-            System.out.println("Game not finished");
-            System.exit(0);
+            printWithMove();
+            movesScanner();
         } else {
             System.out.println("Draw");
             System.exit(0);
         }
     }
-
-    /*
-    private void emountCheck(char[][] field){
-        int xCount = 0;
-        int oCount = 0;
-        for(int i = 1; i < field.length - 1; i++){
-            for (int j = 2; j < field[i].length - 2; j += 2){
-                if (field[i][j] == '')
-            }
-        }
-    }
-
-     */
 }
 
 class Game {
