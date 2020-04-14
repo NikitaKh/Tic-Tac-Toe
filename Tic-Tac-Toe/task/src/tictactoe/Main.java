@@ -5,42 +5,56 @@ import java.util.Scanner;
 class Field {
 
     private char[][] field;
-    private int fieldSize;
 
-    public Field(int fieldSize){
-        field = new char[fieldSize][fieldSize];
-        this.fieldSize = fieldSize;
-        for (int i = 0; i < fieldSize; i++) {
-            for (int j = 0; j < fieldSize; j++) {
-                field[i][j] = 'X';
+    public Field(int fieldSize) {
+        field = new char[fieldSize + 2][fieldSize + 6];
+        for (int row = 0; row < field.length; row++) {
+            for (int pos = 0; pos < field[row].length; pos++) {
+                if (row == 0 || row == field.length - 1) {
+                    field[row][pos] = '-';
+                } else {
+                    if (pos == 0 || pos == field[row].length - 1) {
+                        field[row][pos] = '|';
+                    } else {
+                        field[row][pos] = ' ';
+                    }
+                }
             }
         }
     }
 
-    public void print(String input) {
-        int y = fieldSize + 2;
-        int counter = 0;
-        for (int i = 0; i < y; i++){
-            if (i == 0 || i == y - 1){
-                System.out.println("---------");
-                continue;
+    public char[][] getField() {
+        return field;
+    }
+
+    public void print (char[][] field){
+        for (int row = 0; row < field.length; row++) {
+            for (int pos = 0; pos < field[row].length; pos++) {
+                System.out.print(field[row][pos]);
             }
-            for (int j = 0; j < fieldSize; j++){
-                switch (j){
-                    case 0:
-                        System.out.print("| " + input.charAt(counter));
-                        counter++;
-                        break;
-                    case 1:
-                        System.out.print(" " + input.charAt(counter) + " ");
-                        counter++;
-                        break;
-                    case 2:
-                        System.out.println(input.charAt(counter) + " |");
-                        counter++;
-                        break;
-                }
-            }
+            System.out.print("\n");
+        }
+    }
+
+}
+
+class Moves {
+
+    private int x;
+    private int y;
+
+    Moves{
+    }
+
+    public void movesScanner(){
+
+        try{
+            Scanner sc = new Scanner(System.in);
+            x = sc.nextInt();
+            y = sc.nextInt();
+        } catch (IllegalMonitorStateException e){
+            System.out.print("You should enter numbers!");
+            movesScanner();
         }
     }
 }
@@ -53,13 +67,13 @@ class Game {
     }
 
     public void play(){
-        Scanner sc = new Scanner(System.in);
-        String input = sc.next();
-        field.print(input);
-        result(input);
+        field.print(field.getField());
+
+        //result(input);
     }
 
 
+    /*
     public void result (String input){
         char[][] fileld2 = new char[3][3];
         int counter = 0;
@@ -175,11 +189,12 @@ class Game {
             System.exit(0);
         }
     }
+     */
 }
 
 public class Main {
     public static void main(String[] args) {
-        Game game1 = new Game(3);
-        game1.play();
+        Game game = new Game(3);
+        game.play();
     }
 }
